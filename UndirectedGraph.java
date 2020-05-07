@@ -11,14 +11,11 @@ public class UndirectedGraph<AnyType> {
         ArrayList<AnyType> temp = new ArrayList<>();
         temp.add(t);
         matrix.add(temp);
-        int index = matrix.indexOf(t);
-        makeEdge(t, index);
     }
     
-    public void makeEdge(AnyType t, int index) {
+    public void makeEdge(AnyType t, AnyType s) {
+        int index = matrix.indexOf(t);
         ArrayList<AnyType> temp = matrix.get(index);
-        for(AnyType e : ) {
-            
-        }
+        temp.add(s);
     }
 }
