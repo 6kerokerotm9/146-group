@@ -5,6 +5,8 @@ public class Profile
 {
     private BufferedImage picture;
     private String name;
+    private String password;
+    private String username;
     private String status;
     private ArrayList<Profile> friendProfiles;
     /** Constructor for an instance of a profile. */
@@ -12,6 +14,11 @@ public class Profile
     {
 
     } // end default constructor/**
+    
+    public Profile(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
     /** Returns the picture associated with the profile.@return  The profile's picture. */
     public BufferedImage getProfilePicture()
     {
@@ -62,11 +69,21 @@ public class Profile
     } // end removeFriend
     public String toString()
     {
-        return name + " " + status; //remember to fix this later
+        return username + " " + password; //remember to fix this later
     } // end toString
     /** Displays the profile's information and friendProfiles. */
     public void display()
     {
 
     } // end display
+    //function that adds username and password to the account when signing in 
+    public void setLogin(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+    //function that takes login information and returns true if login is sucessful
+    public boolean checkLogin(String username, String password) {
+        return this.username.equals(username) && this.password.equals(password);
+    }
+   
 }// end Profile

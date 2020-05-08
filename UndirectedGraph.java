@@ -15,7 +15,21 @@ public class UndirectedGraph<AnyType> {
     
     public void makeEdge(AnyType t, AnyType s) {
         int index = matrix.indexOf(t);
-        ArrayList<AnyType> temp = matrix.get(index);
-        temp.add(s);
+        matrix.get(index).add(s);
+    }
+    
+    public ArrayList<AnyType> getVertices() { //function returns all the vertices in the graph
+        ArrayList<AnyType> temp = new ArrayList<>(); //temporary array that holds the vertices
+        for(ArrayList<AnyType> a : matrix) {
+            temp.add(a.get(0));
+        }
+        return temp;
+    }
+    
+    public void print() {
+        ArrayList<AnyType> temp = new ArrayList<>(); //temporary array that holds the vertices
+        for(ArrayList<AnyType> a : matrix) {
+            System.out.println(a.get(0));
+        }
     }
 }
