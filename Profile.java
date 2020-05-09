@@ -1,7 +1,10 @@
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class Profile
+import javax.swing.JPanel;
+
+public class Profile extends Observable
 {
     private BufferedImage picture;
     private String name;
@@ -10,14 +13,15 @@ public class Profile
     private String status;
     private ArrayList<Profile> friendProfiles;
     /** Constructor for an instance of a profile. */
-    public Profile()
+    public Profile() 
     {
-
+        friendProfiles = new ArrayList<Profile>();
     } // end default constructor/**
     
     public Profile(String username, String password) {
         this.username = username;
         this.password = password;
+        friendProfiles = new ArrayList<Profile>();
     }
     /** Returns the picture associated with the profile.@return  The profile's picture. */
     public BufferedImage getProfilePicture()
@@ -35,6 +39,9 @@ public class Profile
     public void setName(String firstName, String lastName)
     {
         name = firstName + " " + lastName;
+        super.setChanged(); //notify the observers that the data changed
+        super.notifyObservers();
+        
     } // end setName
     /** Returns the name associated with the profile.
      * @return  The profile's name. */
@@ -45,7 +52,9 @@ public class Profile
     /** Sets the current status of the profile to the given string.@param stat  The new status for the profile. */
     public void setStatus(String stat)
     {
-
+        status = stat;
+        super.setChanged(); //notify the observers that the data changed
+        super.notifyObservers();
     } // end setStatus
     /** Returns the status associated with the profile.@return  The profile's status.*/
     public String getStatus()
@@ -69,12 +78,12 @@ public class Profile
     } // end removeFriend
     public String toString()
     {
-        return username + " " + password; //remember to fix this later
+        return name; //remember to fix this later
     } // end toString
     /** Displays the profile's information and friendProfiles. */
     public void display()
     {
-
+        
     } // end display
     //function that adds username and password to the account when signing in 
     public void setLogin(String username, String password) {

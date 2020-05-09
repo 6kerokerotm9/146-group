@@ -34,10 +34,23 @@ public class ProfileManager extends Observable
         }
         return null;
     }
+    
+    public Profile search(String name) {
+        ArrayList<Profile> temp = allProfiles.getVertices();
+        for(Profile p : temp) {
+            if(p.getName().equalsIgnoreCase(name)) {
+                return p;
+            }
+        }
+        return null;
+    }
     //function that updates the gui when the user interacts with the components
     public void update() {
         super.setChanged(); //notify the observers that the data changed
         super.notifyObservers();
+    }
+    public void print() {
+        allProfiles.print();
     }
     /** Displays each profile's information and friends. */
     public void display(Profile startPoint)

@@ -14,7 +14,13 @@ public class UndirectedGraph<AnyType> {
     }
     
     public void makeEdge(AnyType t, AnyType s) {
-        int index = matrix.indexOf(t);
+        int index = 0;
+        for(ArrayList<AnyType> a : matrix) {
+            if(a.get(0).equals(t)) {
+                break;
+            }
+            index++;
+        }
         matrix.get(index).add(s);
     }
     
@@ -29,7 +35,9 @@ public class UndirectedGraph<AnyType> {
     public void print() {
         ArrayList<AnyType> temp = new ArrayList<>(); //temporary array that holds the vertices
         for(ArrayList<AnyType> a : matrix) {
-            System.out.println(a.get(0));
+            for(AnyType e : a) {
+                System.out.println(e);
+            }
         }
     }
 }

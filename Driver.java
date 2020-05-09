@@ -7,8 +7,17 @@ public class Driver {
     public static void main(String [] args) {
         JFrame frame  = new JFrame();
         ProfileManager manager = new ProfileManager();
-        View view = new View(manager);
+        Profile temp = new Profile("qr", "ts");
+        temp.setName("skree", "");
+        manager.addProfile(temp);
+        temp = new Profile("ea", "sp");
+        temp.setName("aeris", "");
+        manager.addProfile(temp);
+        temp = new Profile("ff", "ds");
+        temp.setName("ff", "");
+        manager.addProfile(temp);
         
+        View view = new View(manager);
         frame.setContentPane(view);
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
