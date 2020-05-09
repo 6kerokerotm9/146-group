@@ -32,6 +32,8 @@ public class Profile extends Observable
     public void setProfilePicture(BufferedImage newPicture)
     {
         picture = newPicture;
+        update();
+        
     } // end setProfilePicture
     /** Sets the name associated with the profile to the given name.
      * @param firstName  The first name for the profile.
@@ -39,8 +41,7 @@ public class Profile extends Observable
     public void setName(String firstName, String lastName)
     {
         name = firstName + " " + lastName;
-        super.setChanged(); //notify the observers that the data changed
-        super.notifyObservers();
+        update();
         
     } // end setName
     /** Returns the name associated with the profile.
@@ -53,8 +54,7 @@ public class Profile extends Observable
     public void setStatus(String stat)
     {
         status = stat;
-        super.setChanged(); //notify the observers that the data changed
-        super.notifyObservers();
+        update();
     } // end setStatus
     /** Returns the status associated with the profile.@return  The profile's status.*/
     public String getStatus()
@@ -70,6 +70,7 @@ public class Profile extends Observable
     public void addFriend(Profile p)
     {
         friendProfiles.add(p);
+        update();
     } // end addFriend
     /** Removes a friend from the profile's list of friendProfiles.@param p  The profile to be removed from the list.       @return  True if the profile was removed. */
     public boolean removeFriend(Profile p)
@@ -94,5 +95,8 @@ public class Profile extends Observable
     public boolean checkLogin(String username, String password) {
         return this.username.equals(username) && this.password.equals(password);
     }
-   
+    public void update() { //function that updates the gui when values change in class
+        super.setChanged(); //notify the observers that the data changed
+        super.notifyObservers();
+    }
 }// end Profile

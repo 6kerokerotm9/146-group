@@ -1,15 +1,11 @@
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.ComponentOrientation;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class View extends JPanel implements Observer{
@@ -81,26 +77,24 @@ public class View extends JPanel implements Observer{
     
     public void profile() {
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-
-        String output = "";
-        for(Profile p : current.getFriends()) {
-            output += p + "\n";
-        }
-        //System.out.println(output);
-        JLabel friends = new JLabel(output);
-        this.add(friends);
+        //needs to show name of user first
+        showFriends(); //then have the friends output as well
         
         JButton add_name = new JButton("Add Name");
         JButton change_status = new JButton("Add/Change Status");
+        JButton add_picture = new JButton("Add Profile Picture");
         JTextField search_field = new JTextField(); //fix this for me dude
         search_field.setMaximumSize(new Dimension(300, 20));
         search_field.setLocation(325, 10);
         JButton search = new JButton("Search");
+        JButton leave = new JButton("Leave Network");
         
         this.add(change_status);
         this.add(add_name);
+        this.add(add_picture);
         this.add(search);
         this.add(search_field);
+        this.add(leave);
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -123,6 +117,20 @@ public class View extends JPanel implements Observer{
             @Override
             public void actionPerformed(ActionEvent e) {
                 inputName();
+            }
+        });
+        
+        add_picture.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setPicture();
+            }
+        });
+        
+        leave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Delete here");
             }
         });
     }
@@ -182,6 +190,51 @@ public class View extends JPanel implements Observer{
                 frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)); //close the window after status is set
             }
         });
+        frame.setVisible(true);
+        frame.setPreferredSize(new Dimension(700, 700));
+        frame.pack();
+        frame.setLayout(new FlowLayout());
+    }
+    
+    public void showFriends() {
+        String output = "";
+        for(Profile p : current.getFriends()) {
+            output += p + "\n";
+        }
+        JLabel friends = new JLabel(output);
+        System.out.println(output);
+    }
+    
+    public void setPicture() {
+        JFrame frame = new JFrame(); //create a new window for the information to appear on
+        JRadioButton spartan = new JRadioButton("spartan"); //add four radio buttons to let the user pick the picture that they want
+        JRadioButton java = new JRadioButton("java");
+        JRadioButton dijkstra = new JRadioButton("dijkstra");
+        JRadioButton tree = new JRadioButton("tree");
+        
+        class Action implements ActionListener {
+            public void actionPerformed(ActionEvent e) {
+                BufferedImage image;
+                try {
+                    image = ImageIO.read(new File(e.getActionCommand() + ".jpg")); //use functions to find image files
+                    current.setProfilePicture(image);
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                }
+                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)); //close the window after status is set
+            }
+        };
+        
+        spartan.addActionListener(new Action()); //add action of choosing the image to each of the buttons
+        java.addActionListener(new Action());
+        dijkstra.addActionListener(new Action());
+        tree.addActionListener(new Action());
+        
+        frame.add(spartan);
+        frame.add(java);
+        frame.add(dijkstra);
+        frame.add(tree);
+        
         frame.setVisible(true);
         frame.setPreferredSize(new Dimension(700, 700));
         frame.pack();
