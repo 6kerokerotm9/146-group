@@ -76,9 +76,17 @@ public class View extends JPanel implements Observer{
     }
     
     public void profile() {
-        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         //needs to show name of user first
-        showFriends(); //then have the friends output as well
+        //showFriends(); //then have the friends output as well
+        String output = "";
+        for(Profile p : current.getFriends()) {
+            output += p + "\n";
+        }
+        JPanel friend_panel = new JPanel();
+        JLabel friends = new JLabel(output);
+        System.out.println(output);
+        friend_panel.add(friends);
         
         JButton add_name = new JButton("Add Name");
         JButton change_status = new JButton("Add/Change Status");
@@ -95,13 +103,15 @@ public class View extends JPanel implements Observer{
         this.add(search);
         this.add(search_field);
         this.add(leave);
+        this.add(friend_panel);
+        
+        
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Profile temp = manager.search(search_field.getText()); //gets the profile that the user looks for
                 if(temp != null) { //if the account is found
                     results(temp);
-                    manager.update();
                 }
             }
         });
@@ -142,11 +152,10 @@ public class View extends JPanel implements Observer{
         frame.add(addFriend);
         addFriend.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                current.addFriend(profile);
                 manager.createFriendship(current, profile);
-                manager.update();
+                current.addFriend(profile);
                 frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)); //close the window after status is set
-                //manager.print(); //test function
+                manager.update();
             }
         });
         frame.setVisible(true);
