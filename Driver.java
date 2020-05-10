@@ -14,7 +14,7 @@ public class Driver {
         temp.setName("aeris", "");
         manager.addProfile(temp);
         temp = new Profile("ff", "ds");
-        temp.setName("ff", "");
+        temp.setName("my guy", "");
         manager.addProfile(temp);
         
         View view = new View(manager);

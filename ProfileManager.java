@@ -44,6 +44,15 @@ public class ProfileManager extends Observable
         }
         return null;
     }
+    
+    public void removeFriend(Profile p) {
+        for(Profile f : allProfiles.getVertices()) {
+            f.removeFriend(p);
+        }
+        allProfiles.remove(p);
+        print();
+    }
+    
     //function that updates the gui when the user interacts with the components
     public void update() {
         super.setChanged(); //notify the observers that the data changed

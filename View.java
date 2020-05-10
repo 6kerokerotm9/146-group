@@ -16,16 +16,17 @@ public class View extends JPanel implements Observer{
         super();
         this.manager = manager;
         //current = null;
-        current = manager.login("ff", "ds");
+        current = manager.login("ea", "sp");
     }
     
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        this.removeAll(); //clear out the panel for new components
         if(current == null) { //starts at the login screen
             loginScreen();
+            this.revalidate();
         }
         else {
-            this.removeAll(); //clear out the panel for new components
             profile();
             this.revalidate();
         }
@@ -78,14 +79,15 @@ public class View extends JPanel implements Observer{
     public void profile() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         //needs to show name of user first
-        //showFriends(); //then have the friends output as well
+
+        JPanel friend_panel = new JPanel();
+        friend_panel.setLayout(new BoxLayout(friend_panel, BoxLayout.Y_AXIS));
+        friend_panel.add(new JLabel("Welcome: " + current.getName()));
         String output = "";
         for(Profile p : current.getFriends()) {
             output += p + "\n";
         }
-        JPanel friend_panel = new JPanel();
-        JLabel friends = new JLabel(output);
-        System.out.println(output);
+        JLabel friends = new JLabel("Friends: " + output);
         friend_panel.add(friends);
         
         JButton add_name = new JButton("Add Name");
@@ -105,6 +107,14 @@ public class View extends JPanel implements Observer{
         this.add(leave);
         this.add(friend_panel);
         
+        if(current.getProfilePicture() != null) {
+            ImageIcon original = new ImageIcon((Image)current.getProfilePicture());
+            Image scaled = original.getImage();
+            Image og_scaled = scaled.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+            ImageIcon new_prof = new ImageIcon(og_scaled);
+            JLabel image = new JLabel(new_prof);
+            friend_panel.add(image);
+        }
         
         search.addActionListener(new ActionListener() {
             @Override
@@ -140,7 +150,9 @@ public class View extends JPanel implements Observer{
         leave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Delete here");
+                manager.removeFriend(current);
+                current = null;
+                manager.update();
             }
         });
     }
@@ -216,7 +228,7 @@ public class View extends JPanel implements Observer{
     
     public void setPicture() {
         JFrame frame = new JFrame(); //create a new window for the information to appear on
-        JRadioButton spartan = new JRadioButton("spartan"); //add four radio buttons to let the user pick the picture that they want
+        JRadioButton matrix = new JRadioButton("matrix"); //add four radio buttons to let the user pick the picture that they want
         JRadioButton java = new JRadioButton("java");
         JRadioButton dijkstra = new JRadioButton("dijkstra");
         JRadioButton tree = new JRadioButton("tree");
@@ -225,21 +237,23 @@ public class View extends JPanel implements Observer{
             public void actionPerformed(ActionEvent e) {
                 BufferedImage image;
                 try {
+                    System.out.println(e.getActionCommand() + ".jpg");
                     image = ImageIO.read(new File(e.getActionCommand() + ".jpg")); //use functions to find image files
                     current.setProfilePicture(image);
+                    manager.update();
                 } catch (IOException e1) {
-                    // TODO Auto-generated catch block
+                    
                 }
                 frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)); //close the window after status is set
             }
         };
         
-        spartan.addActionListener(new Action()); //add action of choosing the image to each of the buttons
+        matrix.addActionListener(new Action()); //add action of choosing the image to each of the buttons
         java.addActionListener(new Action());
         dijkstra.addActionListener(new Action());
         tree.addActionListener(new Action());
         
-        frame.add(spartan);
+        frame.add(matrix);
         frame.add(java);
         frame.add(dijkstra);
         frame.add(tree);
