@@ -81,25 +81,7 @@ public class View extends JPanel implements Observer{
         JPanel components = new JPanel(); //this panel holds all the buttons and search field
         components.setLayout(new BoxLayout(components, BoxLayout.Y_AXIS));
 
-        JPanel friend_panel = new JPanel(); //this panel holds the user's information
-        if(current.getProfilePicture() != null) { //add profile to the panel
-            ImageIcon original = new ImageIcon((Image)current.getProfilePicture());
-            Image scaled = original.getImage();
-            Image og_scaled = scaled.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
-            ImageIcon new_prof = new ImageIcon(og_scaled);
-            JLabel image = new JLabel(new_prof);
-            friend_panel.add(image);
-        }
-        
-        friend_panel.setLayout(new BoxLayout(friend_panel, BoxLayout.Y_AXIS));
-        friend_panel.add(new JLabel("Name: " + current.getName()));
-        friend_panel.add(new JLabel("Status: " + current.getStatus()));
-        String output = "";
-        for(Profile p : current.getFriends()) {
-            output += p + "\n";
-        }
-        JLabel friends = new JLabel("Friends: " + output);
-        friend_panel.add(friends);
+        JPanel friend_panel = information(current);
         
         JButton add_name = new JButton("Add Name");
         JButton change_status = new JButton("Add/Change Status");
@@ -165,7 +147,8 @@ public class View extends JPanel implements Observer{
     
     public void results(Profile profile) { //function that adds friends to profile
         JFrame frame = new JFrame(); //create a new window for the information to appear on
-        frame.add(new JLabel(profile.toString()));
+        //frame.add(new JLabel(profile.toString()));
+        frame.add(information(profile));
         JButton addFriend = new JButton("Add Friend");
         frame.add(addFriend);
         addFriend.addActionListener(new ActionListener() {
@@ -180,6 +163,29 @@ public class View extends JPanel implements Observer{
         frame.setPreferredSize(new Dimension(700, 700));
         frame.pack();
         frame.setLayout(new FlowLayout());
+    }
+    
+    public JPanel information(Profile user) {
+        JPanel friend_panel = new JPanel(); //this panel holds the user's information
+        if(user.getProfilePicture() != null) { //add profile to the panel
+            ImageIcon original = new ImageIcon((Image)user.getProfilePicture());
+            Image scaled = original.getImage();
+            Image og_scaled = scaled.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+            ImageIcon new_prof = new ImageIcon(og_scaled);
+            JLabel image = new JLabel(new_prof);
+            friend_panel.add(image);
+        }
+        
+        friend_panel.setLayout(new BoxLayout(friend_panel, BoxLayout.Y_AXIS));
+        friend_panel.add(new JLabel("Name: " + user.getName()));
+        friend_panel.add(new JLabel("Status: " + user.getStatus()));
+        String output = "";
+        for(Profile p : user.getFriends()) {
+            output += p + "\n";
+        }
+        JLabel friends = new JLabel("Friends: " + output);
+        friend_panel.add(friends);
+        return friend_panel;
     }
     
     public void changeStatus() {
