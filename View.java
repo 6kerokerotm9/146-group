@@ -24,13 +24,13 @@ public class View extends JPanel implements Observer{
         this.removeAll(); //clear out the panel for new components
         if(current == null) { //starts at the login screen
             loginScreen();
-            this.revalidate();
+            this.revalidate(); //redraw the components on the panel
         }
         else {
             profile();
             this.revalidate();
         }
-        manager.addObserver(this);
+        manager.addObserver(this); //allows the profile to change the panel when values are changed
     }
     
     public void loginScreen() {
@@ -76,7 +76,7 @@ public class View extends JPanel implements Observer{
         });
     }
     
-    public void profile() {
+    public void profile() { //function will draw the user screen when the user signs in
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         JPanel components = new JPanel(); //this panel holds all the buttons and search field
         components.setLayout(new BoxLayout(components, BoxLayout.Y_AXIS));
@@ -157,7 +157,6 @@ public class View extends JPanel implements Observer{
     
     public void results(Profile profile) { //function that adds friends to profile
         JFrame frame = new JFrame(); //create a new window for the information to appear on
-        //frame.add(new JLabel(profile.toString()));
         frame.add(information(profile));
         JButton addFriend = new JButton("Add Friend");
         frame.add(addFriend);
