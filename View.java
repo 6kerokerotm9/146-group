@@ -90,6 +90,7 @@ public class View extends JPanel implements Observer{
         search_field.setMaximumSize(new Dimension(300, 20));
         search_field.setLocation(325, 10);
         JButton search = new JButton("Search");
+        JButton logout = new JButton("Logout");
         JButton leave = new JButton("Leave Network");
         
         components.setAlignmentY(0f);
@@ -98,8 +99,9 @@ public class View extends JPanel implements Observer{
         components.add(change_status);
         components.add(add_name);
         components.add(add_picture);
-        components.add(search);
         components.add(search_field);
+        components.add(search);
+        components.add(logout);
         components.add(leave);
         this.add(components);
         this.add(friend_panel);
@@ -132,6 +134,14 @@ public class View extends JPanel implements Observer{
             @Override
             public void actionPerformed(ActionEvent e) {
                 setPicture();
+            }
+        });
+        
+        logout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                current = null;
+                manager.update();
             }
         });
         
