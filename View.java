@@ -16,7 +16,7 @@ public class View extends JPanel implements Observer{
         super();
         this.manager = manager;
         //current = null;
-        current = manager.login("ea", "sp");
+        current = manager.login("ff", "ds");
     }
     
     public void paintComponent(Graphics g) {
@@ -83,6 +83,7 @@ public class View extends JPanel implements Observer{
         JPanel friend_panel = new JPanel();
         friend_panel.setLayout(new BoxLayout(friend_panel, BoxLayout.Y_AXIS));
         friend_panel.add(new JLabel("Welcome: " + current.getName()));
+        friend_panel.add(new JLabel(current.getStatus()));
         String output = "";
         for(Profile p : current.getFriends()) {
             output += p + "\n";
@@ -187,6 +188,7 @@ public class View extends JPanel implements Observer{
             public void actionPerformed(ActionEvent e) {
                 current.setStatus(status.getText());
                 frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)); //close the window after status is set
+                manager.update();
             }
         });
         frame.setVisible(true);
@@ -209,6 +211,7 @@ public class View extends JPanel implements Observer{
             public void actionPerformed(ActionEvent e) {
                 current.setName(first.getText(), last.getText());
                 frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)); //close the window after status is set
+                manager.update();
             }
         });
         frame.setVisible(true);
