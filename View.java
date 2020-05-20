@@ -77,13 +77,23 @@ public class View extends JPanel implements Observer{
     }
     
     public void profile() {
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        //needs to show name of user first
+        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        JPanel components = new JPanel(); //this panel holds all the buttons and search field
+        components.setLayout(new BoxLayout(components, BoxLayout.Y_AXIS));
 
-        JPanel friend_panel = new JPanel();
+        JPanel friend_panel = new JPanel(); //this panel holds the user's information
+        if(current.getProfilePicture() != null) { //add profile to the panel
+            ImageIcon original = new ImageIcon((Image)current.getProfilePicture());
+            Image scaled = original.getImage();
+            Image og_scaled = scaled.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+            ImageIcon new_prof = new ImageIcon(og_scaled);
+            JLabel image = new JLabel(new_prof);
+            friend_panel.add(image);
+        }
+        
         friend_panel.setLayout(new BoxLayout(friend_panel, BoxLayout.Y_AXIS));
-        friend_panel.add(new JLabel("Welcome: " + current.getName()));
-        friend_panel.add(new JLabel(current.getStatus()));
+        friend_panel.add(new JLabel("Name: " + current.getName()));
+        friend_panel.add(new JLabel("Status: " + current.getStatus()));
         String output = "";
         for(Profile p : current.getFriends()) {
             output += p + "\n";
@@ -94,28 +104,23 @@ public class View extends JPanel implements Observer{
         JButton add_name = new JButton("Add Name");
         JButton change_status = new JButton("Add/Change Status");
         JButton add_picture = new JButton("Add Profile Picture");
-        JTextField search_field = new JTextField(); //fix this for me dude
+        JTextField search_field = new JTextField(); 
         search_field.setMaximumSize(new Dimension(300, 20));
         search_field.setLocation(325, 10);
         JButton search = new JButton("Search");
         JButton leave = new JButton("Leave Network");
         
-        this.add(change_status);
-        this.add(add_name);
-        this.add(add_picture);
-        this.add(search);
-        this.add(search_field);
-        this.add(leave);
-        this.add(friend_panel);
+        components.setAlignmentY(0f);
+        friend_panel.setAlignmentY(0f);
         
-        if(current.getProfilePicture() != null) {
-            ImageIcon original = new ImageIcon((Image)current.getProfilePicture());
-            Image scaled = original.getImage();
-            Image og_scaled = scaled.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
-            ImageIcon new_prof = new ImageIcon(og_scaled);
-            JLabel image = new JLabel(new_prof);
-            friend_panel.add(image);
-        }
+        components.add(change_status);
+        components.add(add_name);
+        components.add(add_picture);
+        components.add(search);
+        components.add(search_field);
+        components.add(leave);
+        this.add(components);
+        this.add(friend_panel);
         
         search.addActionListener(new ActionListener() {
             @Override

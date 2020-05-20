@@ -1,7 +1,10 @@
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class Profile extends Observable
@@ -16,12 +19,27 @@ public class Profile extends Observable
     public Profile() 
     {
         friendProfiles = new ArrayList<Profile>();
-    } // end default constructor/**
+        name = "";
+        status = "";
+        try {
+            picture = ImageIO.read(new File("blank.jpg")); //add default profile picture to profiles when created
+        } catch (IOException e) {
+            System.out.println("Image not found.");
+        }
+    }
+    // end default constructor/**
     
     public Profile(String username, String password) {
         this.username = username;
         this.password = password;
         friendProfiles = new ArrayList<Profile>();
+        name = "";
+        status = "";
+        try {
+            picture = ImageIO.read(new File("blank.jpg")); //add default profile picture to profiles when created
+        } catch (IOException e) {
+            System.out.println("Image not found.");
+        }
     }
     /** Returns the picture associated with the profile.@return  The profile's picture. */
     public BufferedImage getProfilePicture()
