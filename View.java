@@ -173,6 +173,8 @@ public class View extends JPanel implements Observer{
             public void actionPerformed(ActionEvent e) {
                 manager.createFriendship(current, profile);
                 current.addFriend(profile);
+                manager.createFriendship(profile, current);
+                profile.addFriend(current);
                 frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)); //close the window after status is set
                 manager.update();
             }

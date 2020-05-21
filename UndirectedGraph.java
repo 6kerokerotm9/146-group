@@ -51,7 +51,6 @@ public class UndirectedGraph<AnyType> {
             }
         }
         matrix.remove(matrix.get(index));
-        //print();
     }
 
 
@@ -62,5 +61,6 @@ public class UndirectedGraph<AnyType> {
                 System.out.println(e);
             }
         }
+        System.out.println();
     }
 }
