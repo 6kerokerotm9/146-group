@@ -32,10 +32,10 @@ public class UndirectedGraph<AnyType> {
         return temp;
     }
 
-    public void remove(Profile p) {
+    public void remove(AnyType t) {
         int index = 0;
         for(ArrayList<AnyType> a : matrix) {
-            if(a.get(0).equals(p)) {
+            if(a.get(0).equals(t)) {
                 break;
             }
             index++;
@@ -46,8 +46,8 @@ public class UndirectedGraph<AnyType> {
         }
 
         for(ArrayList<AnyType> a : matrix) {
-            if(a.contains(p)) {
-                a.remove(p);
+            if(a.contains(t)) {
+                a.remove(t);
             }
         }
         matrix.remove(matrix.get(index));
