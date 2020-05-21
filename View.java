@@ -92,6 +92,7 @@ public class View extends JPanel implements Observer{
         JButton search = new JButton("Search");
         JButton logout = new JButton("Logout");
         JButton leave = new JButton("Leave Network");
+        JButton more_friends = new JButton("More Friends");
         
         components.setAlignmentY(0f);
         friend_panel.setAlignmentY(0f);
@@ -99,6 +100,7 @@ public class View extends JPanel implements Observer{
         components.add(change_status);
         components.add(add_name);
         components.add(add_picture);
+        components.add(more_friends);
         components.add(search_field);
         components.add(search);
         components.add(logout);
@@ -134,6 +136,13 @@ public class View extends JPanel implements Observer{
             @Override
             public void actionPerformed(ActionEvent e) {
                 setPicture();
+            }
+        });
+        
+        more_friends.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("graph relationships");
             }
         });
         
