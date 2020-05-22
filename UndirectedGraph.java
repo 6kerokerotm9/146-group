@@ -44,31 +44,33 @@ public class UndirectedGraph<AnyType> {
         return temp;
     }
     
+    //function that tests if two vertices are connected in the graph
     public boolean showConnectivity(AnyType t, AnyType u) {
         ArrayList<AnyType> temp = getEdges(t);
         ArrayList<AnyType> temp2 = getEdges(u);
-        return (temp.contains(u) && temp2.contains(t));
+        return (temp.contains(u) && temp2.contains(t)); //check both graphs for the nodes passed in the parameter
     }
 
+    //removes a node and the node from all the adjacency graphs of other nodes
     public void remove(AnyType t) {
         int index = 0;
-        for(ArrayList<AnyType> a : matrix) {
+        for(ArrayList<AnyType> a : matrix) { //first find the index of the adjacency graph for the node
             if(a.get(0).equals(t)) {
                 break;
             }
             index++;
         }
         
-        if(index >= matrix.size()) {
+        if(index >= matrix.size()) { //if the index is not found then break
             return;
         }
 
-        for(ArrayList<AnyType> a : matrix) {
+        for(ArrayList<AnyType> a : matrix) { //remove the node from every adjacency list 
             if(a.contains(t)) {
                 a.remove(t);
             }
         }
-        matrix.remove(matrix.get(index));
+        matrix.remove(matrix.get(index)); //finally remove the node from the adjacency graph (and all its connections)
     }
 
 

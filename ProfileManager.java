@@ -35,6 +35,7 @@ public class ProfileManager extends Observable
         return null;
     }
     
+    //basic function to search for users
     public Profile search(String name) {
         ArrayList<Profile> temp = allProfiles.getVertices();
         for(Profile p : temp) {
@@ -45,11 +46,12 @@ public class ProfileManager extends Observable
         return null;
     }
     
+    //removes friends if needed
     public void removeFriend(Profile p) {
-        for(Profile f : allProfiles.getVertices()) {
+        for(Profile f : allProfiles.getVertices()) { //find the profile in each adjacency graph
             f.removeFriend(p);
         }
-        allProfiles.remove(p);
+        allProfiles.remove(p); //remove the profile from the manager
     }
     
     public ArrayList<Profile> getFriends(Profile p) {
@@ -60,10 +62,11 @@ public class ProfileManager extends Observable
         return allProfiles.printEdges(p);
     }
     
+    //function that shows all mutual friends for two users
     public String showMutuals(Profile current, Profile other) {
         String list = "";
-        ArrayList<Profile> temp = getFriends(current);
-        for(Profile p : temp) {
+        ArrayList<Profile> temp = getFriends(current); //gets all the friends for one user
+        for(Profile p : temp) { //iterates through each friend and see if that friend is friends with the other profile
             if((p.getName()).equals(other.getName())) { //if the current node is the same as the other node then skip it
                 continue;
             }

@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -8,25 +9,22 @@ public class Driver {
         JFrame frame  = new JFrame();
         ProfileManager manager = new ProfileManager();
         
-        Profile temp = new Profile("qr", "ts");
-        temp.setName("skree", "");
-        manager.addProfile(temp);
-        Profile temp2 = new Profile("ea", "sp");
-        temp2.setName("aeris", "g");
-        manager.addProfile(temp);
-        Profile temp3 = new Profile("rr", "da");
-        temp3.setName("odd", "eyes");
-        manager.addProfile(temp);
-        Profile temp4 = new Profile("ff", "ds");
-        //temp4.setName("my guy", "");
-        manager.addProfile(temp);
-        manager.addProfile(temp2);
-        manager.addProfile(temp3);
-        manager.addProfile(temp4);
-        
-        addFriends(manager, temp, temp2);
-        addFriends(manager, temp2, temp3);
-        addFriends(manager, temp, temp3);
+        //preload some profiles
+        ArrayList<Profile> temp = new ArrayList<>();
+        temp.add(createProfile("qr", "ts", "cloud", "s", manager));
+        temp.add(createProfile("ea", "sp", "aeris", "g", manager));
+        temp.add(createProfile("rr", "da", "Nii", "ii", manager));
+        temp.add(createProfile("ff", "ds", "four", "heads", manager));
+        temp.add(createProfile("ls", "mm", "Sythiee", "s", manager));
+        temp.add(createProfile("qr", "lm", "Drei", "set", manager));
+                
+        //create some friendships
+        addFriends(manager, temp.get(0), temp.get(5));
+        addFriends(manager, temp.get(2), temp.get(3));
+        addFriends(manager, temp.get(0), temp.get(3));
+        addFriends(manager, temp.get(4), temp.get(5));
+        addFriends(manager, temp.get(0), temp.get(1));
+        addFriends(manager, temp.get(1), temp.get(4));
         
         View view = new View(manager);
         frame.setContentPane(view);
@@ -38,6 +36,15 @@ public class Driver {
         frame.setLayout(new FlowLayout());
     }
     
+    //function to create profiles to populate the network
+    public static Profile createProfile(String username, String password, String name, String lastname, ProfileManager manager) {
+        Profile profile = new Profile(username, password);
+        profile.setName(name, lastname);
+        manager.addProfile(profile);
+        return profile;
+    }
+    
+    //function to initialize friends for the pre constructed profiles
     public static void addFriends(ProfileManager manager, Profile current, Profile profile) {
         manager.createFriendship(current, profile);
         current.addFriend(profile);

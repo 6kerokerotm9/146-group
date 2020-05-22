@@ -16,8 +16,7 @@ public class View extends JPanel implements Observer{
     public View(ProfileManager manager) {
         super();
         this.manager = manager;
-        //current = null;
-        current = manager.login("ff", "ds");
+        current = null;
     }
     
     public void paintComponent(Graphics g) {
