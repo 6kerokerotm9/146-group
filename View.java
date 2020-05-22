@@ -183,6 +183,7 @@ public class View extends JPanel implements Observer{
                 manager.update();
             }
         });
+        System.out.println(manager.showMutuals(current, profile)); //here
         frame.setVisible(true);
         frame.setPreferredSize(new Dimension(700, 700));
         frame.pack();

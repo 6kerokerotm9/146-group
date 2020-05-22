@@ -60,6 +60,23 @@ public class ProfileManager extends Observable
         return allProfiles.printEdges(p);
     }
     
+    public String showMutuals(Profile current, Profile other) {
+        String list = "";
+        ArrayList<Profile> temp = getFriends(current);
+        for(Profile p : temp) {
+            if((p.getName()).equals(other.getName())) { //if the current node is the same as the other node then skip it
+                continue;
+            }
+            if(allProfiles.showConnectivity(p, other)) {
+                list += p + ", ";
+            }
+        }
+        if(list.length() > 0) {
+            list = list.substring(0, list.length()-2);
+        }
+        return list;
+    }
+    
     //function that updates the gui when the user interacts with the components
     public void update() {
         super.setChanged(); //notify the observers that the data changed

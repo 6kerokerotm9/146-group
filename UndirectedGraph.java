@@ -43,6 +43,12 @@ public class UndirectedGraph<AnyType> {
         }
         return temp;
     }
+    
+    public boolean showConnectivity(AnyType t, AnyType u) {
+        ArrayList<AnyType> temp = getEdges(t);
+        ArrayList<AnyType> temp2 = getEdges(u);
+        return (temp.contains(u) && temp2.contains(t));
+    }
 
     public void remove(AnyType t) {
         int index = 0;
