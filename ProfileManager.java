@@ -50,7 +50,10 @@ public class ProfileManager extends Observable
             f.removeFriend(p);
         }
         allProfiles.remove(p);
-        print();
+    }
+    
+    public ArrayList<Profile> getFriends(Profile p) {
+        return allProfiles.getEdges(p);
     }
     
     //function that updates the gui when the user interacts with the components
@@ -58,12 +61,7 @@ public class ProfileManager extends Observable
         super.setChanged(); //notify the observers that the data changed
         super.notifyObservers();
     }
-    public void print() {
-        allProfiles.print();
+    public void print(Profile p) {
+        allProfiles.printEdges(p);
     }
-    /** Displays each profile's information and friends. */
-    public void display(Profile startPoint)
-    {
-
-    } // end display
 } // end ProfileManager

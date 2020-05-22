@@ -23,6 +23,18 @@ public class UndirectedGraph<AnyType> {
         }
         matrix.get(index).add(s);
     }
+    
+    public ArrayList<AnyType> getEdges(AnyType t) { // returns the edges (adjacencies) of the given node
+        ArrayList<AnyType> temp = new ArrayList<>(); //temp array to hold the edges
+        for(ArrayList<AnyType> a : matrix) {
+            if(a.get(0).equals(t)) {
+                for(int i=1; i<a.size(); i++) { //populate the array with all the indexes after index 0 as 0 is the node
+                    temp.add(a.get(i)); 
+                }
+            }
+        }
+        return temp;
+    }
 
     public ArrayList<AnyType> getVertices() { //function returns all the vertices in the graph
         ArrayList<AnyType> temp = new ArrayList<>(); //temporary array that holds the vertices
@@ -54,7 +66,7 @@ public class UndirectedGraph<AnyType> {
     }
 
 
-    public void print() {
+    public void printVertices() {
         ArrayList<AnyType> temp = new ArrayList<>(); //temporary array that holds the vertices
         for(ArrayList<AnyType> a : matrix) {
             for(AnyType e : a) {
@@ -62,5 +74,22 @@ public class UndirectedGraph<AnyType> {
             }
         }
         System.out.println();
+    }
+    
+    public void printEdges(AnyType t) { //function that prints out the edges of a given node
+        int index = 0;
+        for(ArrayList<AnyType> a : matrix) {
+            if(a.get(0).equals(t)) {
+                break;
+            }
+            index++;
+        }
+        
+        if(index >= matrix.size()) {
+            return;
+        }
+        for(AnyType n : matrix.get(index)) {
+            System.out.println(n);
+        }
     }
 }

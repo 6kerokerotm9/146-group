@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -142,7 +143,7 @@ public class View extends JPanel implements Observer{
         more_friends.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("graph relationships");
+                showRelations();
             }
         });
         
@@ -169,6 +170,9 @@ public class View extends JPanel implements Observer{
         frame.add(information(profile));
         JButton addFriend = new JButton("Add Friend");
         frame.add(addFriend);
+        if(current.getFriends().contains(profile)) { //if the friend is already in the list then do not re add 
+            addFriend.setEnabled(false);
+        }
         addFriend.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 manager.createFriendship(current, profile);
@@ -201,7 +205,10 @@ public class View extends JPanel implements Observer{
         friend_panel.add(new JLabel("Status: " + user.getStatus()));
         String output = "";
         for(Profile p : user.getFriends()) {
-            output += p + "\n";
+            output += p + ", ";
+        }
+        if(output.length() > 0) { //if output is empty
+            output = output.substring(0, output.length()-2); //remove the last comma and space so the output looks clean
         }
         JLabel friends = new JLabel("Friends: " + output);
         friend_panel.add(friends);
@@ -251,15 +258,6 @@ public class View extends JPanel implements Observer{
         frame.setLayout(new FlowLayout());
     }
     
-    public void showFriends() {
-        String output = "";
-        for(Profile p : current.getFriends()) {
-            output += p + "\n";
-        }
-        JLabel friends = new JLabel(output);
-        System.out.println(output);
-    }
-    
     public void setPicture() {
         JFrame frame = new JFrame(); //create a new window for the information to appear on
         JRadioButton matrix = new JRadioButton("matrix"); //add four radio buttons to let the user pick the picture that they want
@@ -296,6 +294,19 @@ public class View extends JPanel implements Observer{
         frame.setPreferredSize(new Dimension(700, 700));
         frame.pack();
         frame.setLayout(new FlowLayout());
+    }
+    
+    public void network() {
+        JFrame frame = new JFrame();
+        
+    }
+    
+    public void showRelations() {
+        ArrayList<Profile> temp = manager.getFriends(current);
+        for(Profile p : temp) {
+            manager.print(p);
+            System.out.println();
+        }
     }
 
     @Override
