@@ -76,7 +76,8 @@ public class UndirectedGraph<AnyType> {
         System.out.println();
     }
     
-    public void printEdges(AnyType t) { //function that prints out the edges of a given node
+    public String printEdges(AnyType t) { //function that prints out the edges of a given node
+        String temp = ""; //will hold the names of the edges
         int index = 0;
         for(ArrayList<AnyType> a : matrix) {
             if(a.get(0).equals(t)) {
@@ -86,10 +87,16 @@ public class UndirectedGraph<AnyType> {
         }
         
         if(index >= matrix.size()) {
-            return;
+            return "";
         }
-        for(AnyType n : matrix.get(index)) {
-            System.out.println(n);
+        
+        temp += matrix.get(index).get(0) + ": ";
+        for(int i=1; i<matrix.get(index).size(); i++) { //populate the array with all the indexes after index 0 as 0 is the node
+            temp +=  matrix.get(index).get(i) + ", ";
         }
+        if(temp.length() > 0) {
+            temp = temp.substring(0, temp.length() -2); //remove the commas at the end 
+        }
+        return temp;
     }
 }

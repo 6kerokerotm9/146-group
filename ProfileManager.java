@@ -56,12 +56,13 @@ public class ProfileManager extends Observable
         return allProfiles.getEdges(p);
     }
     
+    public String edges(Profile p) {
+        return allProfiles.printEdges(p);
+    }
+    
     //function that updates the gui when the user interacts with the components
     public void update() {
         super.setChanged(); //notify the observers that the data changed
         super.notifyObservers();
-    }
-    public void print(Profile p) {
-        allProfiles.printEdges(p);
     }
 } // end ProfileManager

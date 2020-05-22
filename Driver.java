@@ -26,7 +26,7 @@ public class Driver {
         
         addFriends(manager, temp, temp2);
         addFriends(manager, temp2, temp3);
-        addFriends(manager, temp3, temp);
+        addFriends(manager, temp, temp3);
         
         View view = new View(manager);
         frame.setContentPane(view);

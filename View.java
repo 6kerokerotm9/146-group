@@ -265,11 +265,13 @@ public class View extends JPanel implements Observer{
         JRadioButton dijkstra = new JRadioButton("dijkstra");
         JRadioButton tree = new JRadioButton("tree");
         
+        JPanel buttons = new JPanel();
+        JPanel text = new JPanel();
+        
         class Action implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 BufferedImage image;
                 try {
-                    System.out.println(e.getActionCommand() + ".jpg");
                     image = ImageIO.read(new File(e.getActionCommand() + ".jpg")); //use functions to find image files
                     current.setProfilePicture(image);
                     manager.update();
@@ -285,28 +287,33 @@ public class View extends JPanel implements Observer{
         dijkstra.addActionListener(new Action());
         tree.addActionListener(new Action());
         
-        frame.add(matrix);
-        frame.add(java);
-        frame.add(dijkstra);
-        frame.add(tree);
+        text.add(new JLabel("<html><h1>Please choose the picture you would like to use.</h1><br>Choose one: </html>"));
+        buttons.add(matrix);
+        buttons.add(java);
+        buttons.add(dijkstra);
+        buttons.add(tree);
+        frame.setContentPane(text);
+        frame.add(buttons);
         
         frame.setVisible(true);
         frame.setPreferredSize(new Dimension(700, 700));
         frame.pack();
-        frame.setLayout(new FlowLayout());
-    }
-    
-    public void network() {
-        JFrame frame = new JFrame();
-        
     }
     
     public void showRelations() {
         ArrayList<Profile> temp = manager.getFriends(current);
+        String names = "<html><h1>Your Friend's Friends</h1><br>(Key)Friends: Their Friends<br><br>"; //use html tags for formatting
+        JFrame frame = new JFrame();
         for(Profile p : temp) {
-            manager.print(p);
-            System.out.println();
+            names += manager.edges(p) + "<br><br>";
         }
+        names += "</html>"; //remember to end the html tags
+        JLabel contents = new JLabel(names);
+        frame.add(contents);
+        frame.setVisible(true);
+        frame.setPreferredSize(new Dimension(700, 700));
+        frame.pack();
+        frame.setLayout(new FlowLayout());
     }
 
     @Override
