@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**An implementation of a profile manager on a simple social network.
- * @author Jesse Grabowski
- * @author Joseph Erickson
+ * @author Joshua Sjah
+ * @author Alexis Arroyo
  * @version 5.0 */
 public class ProfileManager extends Observable
 {
