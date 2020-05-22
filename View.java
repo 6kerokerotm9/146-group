@@ -167,7 +167,9 @@ public class View extends JPanel implements Observer{
     
     public void results(Profile profile) { //function that adds friends to profile
         JFrame frame = new JFrame(); //create a new window for the information to appear on
-        frame.add(information(profile));
+        JPanel panel = information(profile);
+        panel.add(new JLabel("Mutual Friends: " + manager.showMutuals(current, profile))); //here
+        frame.add(panel);
         JButton addFriend = new JButton("Add Friend");
         frame.add(addFriend);
         if(current.getFriends().contains(profile)) { //if the friend is already in the list then do not re add 
@@ -183,7 +185,6 @@ public class View extends JPanel implements Observer{
                 manager.update();
             }
         });
-        System.out.println(manager.showMutuals(current, profile)); //here
         frame.setVisible(true);
         frame.setPreferredSize(new Dimension(700, 700));
         frame.pack();
